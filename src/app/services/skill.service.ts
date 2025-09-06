@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { Skill } from '../models/skill.model'; // We'll create this model next
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SkillService {
-  private apiUrl = '/api/skills';
+  private apiUrl = environment.getApiEndpoint('/api/skills');
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

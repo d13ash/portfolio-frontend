@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Contact } from '../models/contact.model';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContactService {
-  private apiUrl = '/api/contacts';
+  private apiUrl = environment.getApiEndpoint('/api/contacts');
   constructor(private http: HttpClient, private auth: AuthService) {}
 
   private getAuthHeaders(): HttpHeaders {

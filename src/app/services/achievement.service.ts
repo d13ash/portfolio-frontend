@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { Achievement } from '../models/achievement.model'; // We'll create this next
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AchievementService {
-  private apiUrl = '/api/achievements';
+  private apiUrl = environment.getApiEndpoint('/api/achievements');
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

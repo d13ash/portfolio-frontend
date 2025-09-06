@@ -1,22 +1,10 @@
-// Environment-based proxy configuration
+// Simplified proxy configuration
 const environment = process.env['NODE_ENV'] || 'development';
-
-// Define different API targets based on environment
-const getApiTarget = () => {
-  switch (environment) {
-    case 'production':
-      return process.env['PROD_API_URL'] || 'https://your-production-api.com';
-    case 'staging':
-      return process.env['STAGING_API_URL'] || 'https://staging-api.yourapp.com';
-    case 'development':
-    default:
-      return process.env['DEV_API_URL'] || 'http://localhost:4000';
-  }
-};
+const apiUrl = process.env['NG_APP_API_URL'] || 'http://localhost:4000';
 
 const PROXY_CONFIG = {
   "/api": {
-    "target": getApiTarget(),
+    "target": apiUrl,
     "secure": environment === 'production',
     "changeOrigin": true,
     "logLevel": environment === 'development' ? "debug" : "info",
@@ -28,6 +16,6 @@ const PROXY_CONFIG = {
 };
 
 console.log(`🚀 Proxy configured for ${environment} environment`);
-console.log(`📡 API Target: ${getApiTarget()}`);
+console.log(`📡 API Target: ${apiUrl}`);
 
 module.exports = PROXY_CONFIG;

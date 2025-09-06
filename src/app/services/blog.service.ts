@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Blog } from '../models/blog.model';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogService {
-  private apiUrl = '/api/blogs';
+  private apiUrl = environment.getApiEndpoint('/api/blogs');
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
