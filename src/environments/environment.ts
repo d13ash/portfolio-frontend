@@ -5,19 +5,33 @@ export const environment = {
   // Basic configuration
   production: true, // Set to true for production builds
   
-  // API Configuration
-  apiUrl: 'https://dash-crm-backend.onrender.com', // Your backend API URL
+  // API Configuration - Use environment variables or fallback
+  apiUrl: (typeof process !== 'undefined' && process.env) 
+    ? (process.env['NG_APP_API_URL'] || 'https://dash-crm-backend.onrender.com')
+    : 'https://dash-crm-backend.onrender.com',
   apiTimeout: 10000, // Request timeout in milliseconds
   
   // Application Info
-  appName: 'Dhananjay Sahu Portfolio',
-  version: '1.0.0',
-  author: 'Dhananjay Sahu',
-  siteUrl: 'http://localhost:4200',
+  appName: (typeof process !== 'undefined' && process.env) 
+    ? (process.env['NG_APP_NAME'] || 'Dhananjay Sahu Portfolio')
+    : 'Dhananjay Sahu Portfolio',
+  version: (typeof process !== 'undefined' && process.env)
+    ? (process.env['NG_APP_VERSION'] || '1.0.0')
+    : '1.0.0',
+  author: (typeof process !== 'undefined' && process.env)
+    ? (process.env['NG_APP_AUTHOR'] || 'Dhananjay Sahu')
+    : 'Dhananjay Sahu',
+  siteUrl: (typeof process !== 'undefined' && process.env)
+    ? (process.env['NG_APP_SITE_URL'] || 'https://your-domain.netlify.app')
+    : 'https://your-domain.netlify.app',
   
   // Feature Flags
-  enableLogging: false,  // Set to false for production
-  enableDebugMode: false, // Set to false for production
+  enableLogging: (typeof process !== 'undefined' && process.env)
+    ? (process.env['NG_APP_ENABLE_LOGGING'] === 'true')
+    : false,
+  enableDebugMode: (typeof process !== 'undefined' && process.env)
+    ? (process.env['NG_APP_ENABLE_DEBUG'] === 'true')  
+    : false,
   
   // File Upload Configuration
   maxFileSize: 5242880, // 5MB in bytes
