@@ -22,8 +22,8 @@ export const environment = {
     ? (process.env['NG_APP_AUTHOR'] || 'Dhananjay Sahu')
     : 'Dhananjay Sahu',
   siteUrl: (typeof process !== 'undefined' && process.env)
-    ? (process.env['NG_APP_SITE_URL'] || 'https://your-domain.netlify.app')
-    : 'https://your-domain.netlify.app',
+    ? (process.env['NG_APP_SITE_URL'] || 'https://dash-porfolio.netlify.app')
+    : 'https://dash-porfolio.netlify.app',
   
   // Feature Flags
   enableLogging: (typeof process !== 'undefined' && process.env)
