@@ -1,0 +1,67 @@
+<div class="p-6 sm:p-8">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">Manage Achievements</h1>
+
+  <!-- Add Achievement Form -->
+  <form [formGroup]="achievementForm" (ngSubmit)="onSubmit()" class="bg-white p-6 rounded-lg shadow-md mb-8">
+    <div class="space-y-4">
+      <div>
+        <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+        <input type="text" id="title" formControlName="title" placeholder="e.g., Back End Development and APIs" class="mt-1 block w-full input-field">
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label for="issuer" class="block text-sm font-medium text-gray-700">Issuer (Optional)</label>
+          <input type="text" id="issuer" formControlName="issuer" placeholder="e.g., freeCodeCamp.org" class="mt-1 block w-full input-field">
+        </div>
+        <div>
+          <label for="date" class="block text-sm font-medium text-gray-700">Date (Optional)</label>
+          <input type="text" id="date" formControlName="date" placeholder="e.g., Aug 2025" class="mt-1 block w-full input-field">
+        </div>
+      </div>
+       <div>
+        <label for="url" class="block text-sm font-medium text-gray-700">Verification URL (Optional)</label>
+        <input type="url" id="url" formControlName="url" placeholder="https://..." class="mt-1 block w-full input-field">
+      </div>
+      <div class="flex items-center">
+        <input type="checkbox" id="isCertification" formControlName="isCertification" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+        <label for="isCertification" class="ml-2 block text-sm text-gray-900">This is a Certification</label>
+      </div>
+    </div>
+    <div class="mt-6">
+      <button type="submit" [disabled]="achievementForm.invalid" class="w-full primary-button">
+        Add Achievement
+      </button>
+    </div>
+  </form>
+
+  <!-- Lists -->
+  <div *ngIf="isLoading" class="text-center text-gray-500">Loading...</div>
+  <div *ngIf="error" class="text-center text-red-500">{{ error }}</div>
+  <div *ngIf="!isLoading && !error" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Certifications List -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-3">Certifications</h2>
+      <ul class="space-y-3">
+        <li *ngFor="let cert of certifications" class="flex justify-between items-start bg-gray-50 p-3 rounded-md">
+          <div class="flex-1">
+            <p class="font-semibold">{{ cert.title }}</p>
+            <p class="text-sm text-gray-500">{{ cert.issuer }} - {{ cert.date }}</p>
+          </div>
+          <button (click)="onDelete(cert._id)" class="ml-4 text-red-500 hover:text-red-700 font-semibold">Delete</button>
+        </li>
+        <li *ngIf="certifications.length === 0" class="text-sm text-gray-400">No certifications added yet.</li>
+      </ul>
+    </div>
+    <!-- Other Achievements List -->
+     <div class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-3">Other Achievements</h2>
+      <ul class="space-y-3">
+        <li *ngFor="let achievement of otherAchievements" class="flex justify-between items-start bg-gray-50 p-3 rounded-md">
+           <p class="font-semibold flex-1">{{ achievement.title }}</p>
+           <button (click)="onDelete(achievement._id)" class="ml-4 text-red-500 hover:text-red-700 font-semibold">Delete</button>
+        </li>
+        <li *ngIf="otherAchievements.length === 0" class="text-sm text-gray-400">No other achievements added yet.</li>
+      </ul>
+    </div>
+  </div>
+</div>

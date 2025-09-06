@@ -1,0 +1,64 @@
+<div class="container mx-auto">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">
+    {{ isEditMode ? 'Edit Blog Post' : 'Add New Blog Post' }}
+  </h2>
+
+  <form [formGroup]="blogForm" (ngSubmit)="onSubmit()" class="bg-white p-8 rounded-lg shadow-md">
+    <!-- Title -->
+    <div class="mb-4">
+      <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title</label>
+      <input id="title" type="text" formControlName="title"
+             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Slug -->
+    <div class="mb-4">
+      <label for="slug" class="block text-gray-700 text-sm font-bold mb-2">URL Slug (e.g., 'my-first-post')</label>
+      <input id="slug" type="text" formControlName="slug"
+             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Summary -->
+    <div class="mb-4">
+      <label for="summary" class="block text-gray-700 text-sm font-bold mb-2">Summary</label>
+      <textarea id="summary" formControlName="summary"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-24"></textarea>
+    </div>
+
+    <!-- Content -->
+    <div class="mb-6">
+      <label for="content" class="block text-gray-700 text-sm font-bold mb-2">Content (Markdown supported)</label>
+      <textarea id="content" formControlName="content"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-48"></textarea>
+    </div>
+
+    <!-- Tags -->
+    <div class="mb-4">
+      <label for="tags" class="block text-gray-700 text-sm font-bold mb-2">Tags (comma-separated)</label>
+      <input id="tags" type="text" formControlName="tags"
+             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
+
+    <!-- Image Upload -->
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2">Cover Image</label>
+      <input type="file" (change)="onFileChange($event)" class="mb-2">
+      <div *ngIf="isUploading" class="text-sm text-gray-500">Uploading...</div>
+      <div *ngIf="imagePreview" class="mt-4">
+        <img [src]="imagePreview" alt="Image Preview" class="w-64 h-auto rounded shadow-md">
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center justify-end">
+      <button routerLink="/admin/blogs" type="button"
+              class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg shadow-md mr-2 transition duration-300">
+        Cancel
+      </button>
+      <button type="submit" [disabled]="blogForm.invalid || isUploading"
+              class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 disabled:bg-teal-400 disabled:cursor-not-allowed">
+        {{ isEditMode ? 'Update Post' : 'Create Post' }}
+      </button>
+    </div>
+  </form>
+</div>

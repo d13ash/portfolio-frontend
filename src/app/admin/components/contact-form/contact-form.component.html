@@ -1,0 +1,42 @@
+<div class="container mx-auto">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">
+    {{ isEditMode ? 'Edit Contact Link' : 'Add New Contact Link' }}
+  </h2>
+
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="bg-white p-8 rounded-lg shadow-md">
+    <!-- Site Name -->
+    <div class="mb-4">
+      <label for="sitename" class="block text-gray-700 text-sm font-bold mb-2">Site Name</label>
+      <input id="sitename" type="text" formControlName="sitename" placeholder="e.g., LinkedIn, GitHub, Twitter"
+             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+             [class.border-red-500]="contactForm.get('sitename')?.invalid && contactForm.get('sitename')?.touched">
+      <div *ngIf="contactForm.get('sitename')?.invalid && contactForm.get('sitename')?.touched" class="text-red-500 text-xs mt-1">
+        Site name is required.
+      </div>
+    </div>
+
+    <!-- Link -->
+    <div class="mb-6">
+      <label for="link" class="block text-gray-700 text-sm font-bold mb-2">Link URL</label>
+      <input id="link" type="url" formControlName="link" placeholder="https://www.example.com/profile"
+             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+             [class.border-red-500]="contactForm.get('link')?.invalid && contactForm.get('link')?.touched">
+      <div *ngIf="contactForm.get('link')?.invalid && contactForm.get('link')?.touched" class="text-red-500 text-xs mt-1">
+        <div *ngIf="contactForm.get('link')?.errors?.['required']">Link URL is required.</div>
+        <div *ngIf="contactForm.get('link')?.errors?.['pattern']">Please enter a valid URL starting with http:// or https://</div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex items-center justify-between">
+      <button type="submit" [disabled]="contactForm.invalid || isSubmitting"
+              class="bg-teal-600 hover:bg-teal-700 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300">
+        {{ isSubmitting ? 'Saving...' : (isEditMode ? 'Update Contact' : 'Add Contact') }}
+      </button>
+      <button type="button" (click)="onCancel()"
+              class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

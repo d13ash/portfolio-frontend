@@ -1,0 +1,48 @@
+<div class="bg-gray-50 min-h-screen py-8 md:py-12">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <ng-container *ngIf="blog$ | async as blog; else loadingOrError">
+      <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <img [src]="blog.coverImage" alt="{{ blog.title }} cover" class="w-full h-64 md:h-80 object-cover">
+        
+        <div class="p-6 md:p-8">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900">{{ blog.title }}</h1>
+              <p class="mt-2 text-md text-gray-500">Published on {{ blog.publishedDate | date: 'longDate' }}</p>
+            </div>
+            <a routerLink="/blog" class="flex items-center text-sm font-semibold text-teal-600 hover:text-teal-800 transition-colors whitespace-nowrap">
+              &larr; Back to Blog
+            </a>
+          </div>
+
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span *ngFor="let tag of blog.tags" class="bg-teal-100 text-teal-800 text-xs font-semibold px-3 py-1 rounded-full">
+              {{ tag }}
+            </span>
+          </div>
+
+          <article class="prose lg:prose-xl max-w-none text-gray-700">
+            <markdown [data]="blog.content"></markdown>
+          </article>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #loadingOrError>
+      <div class="text-center py-20">
+        <div *ngIf="!error" class="flex justify-center items-center">
+          <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-teal-600"></div>
+        </div>
+        <div *ngIf="error" class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+           <h2 class="text-2xl font-bold text-red-600">An Error Occurred</h2>
+           <p class="mt-2 text-gray-600">{{ error }}</p>
+           <a routerLink="/blog" class="mt-6 inline-block bg-teal-600 text-white font-semibold px-6 py-2 rounded-lg hover:bg-teal-700 transition-colors">
+            Return to Blog
+           </a>
+        </div>
+      </div>
+    </ng-template>
+
+  </div>
+</div>

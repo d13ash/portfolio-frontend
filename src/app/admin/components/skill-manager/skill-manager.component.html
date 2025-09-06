@@ -1,0 +1,50 @@
+<div class="p-6 sm:p-8">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">Manage Skills</h1>
+
+  <!-- Add Skill Form -->
+  <form [formGroup]="skillForm" (ngSubmit)="onSubmit()" class="bg-white p-6 rounded-lg shadow-md mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="md:col-span-1">
+        <label for="name" class="block text-sm font-medium text-gray-700">Skill Name</label>
+        <input type="text" id="name" formControlName="name"
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+      </div>
+      <div class="md:col-span-1">
+        <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+        <select id="category" formControlName="category"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        </select>
+      </div>
+      <div class="md:col-span-1 flex items-end">
+        <button type="submit" [disabled]="skillForm.invalid"
+                class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300">
+          Add Skill
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Skills List -->
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <div *ngIf="isLoading" class="text-center text-gray-500">Loading skills...</div>
+    <div *ngIf="error" class="text-center text-red-500">{{ error }}</div>
+    <div *ngIf="!isLoading && !error">
+      <div *ngFor="let category of categories" class="mb-6">
+        <h2 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-3">{{ category }}</h2>
+        <ul class="space-y-2">
+           <li *ngFor="let skill of skills | filterByCategory:category" class="flex justify-between items-center bg-gray-50 p-3 rounded-md">
+            <span>{{ skill.name }}</span>
+            <button (click)="onDelete(skill._id)"
+                    class="text-red-500 hover:text-red-700 font-semibold">
+              Delete
+            </button>
+          </li>
+          <li *ngIf="(skills | filterByCategory:category).length === 0" class="text-sm text-gray-400">No skills in this category yet.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- This pipe doesn't exist yet, we need to create it -->

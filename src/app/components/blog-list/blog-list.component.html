@@ -1,0 +1,35 @@
+<div class="bg-gray-50 min-h-screen">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+        My Blog
+      </h1>
+      <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-500">
+        Sharing my journey and insights on technology, development, and more.
+      </p>
+    </header>
+
+    <div *ngIf="isLoading" class="flex justify-center items-center h-64">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-teal-600"></div>
+    </div>
+
+    <div *ngIf="!isLoading && blogs.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <a *ngFor="let blog of blogs" [routerLink]="['/blog', blog._id]"
+         class="block bg-white rounded-xl shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-all duration-300 ease-in-out hover:shadow-2xl">
+        <div class="relative overflow-hidden h-56">
+          <img [src]="blog.coverImage" alt="{{ blog.title }} cover" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-in-out">
+        </div>
+        <div class="p-6">
+          <p class="text-sm text-gray-500 mb-2">{{ blog.publishedDate | date: 'longDate' }}</p>
+          <h2 class="text-2xl font-bold mb-2 text-gray-800">{{ blog.title }}</h2>
+          <p class="text-gray-600 mb-4 h-20 overflow-hidden text-ellipsis">{{ blog.summary }}</p>
+        </div>
+      </a>
+    </div>
+
+    <div *ngIf="!isLoading && blogs.length === 0" class="text-center mt-12 py-16 bg-white rounded-lg shadow-md">
+      <h2 class="text-2xl font-semibold text-gray-700">No blog posts yet.</h2>
+      <p class="mt-2 text-gray-500">Check back soon for new articles!</p>
+    </div>
+  </div>
+</div>

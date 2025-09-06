@@ -1,0 +1,67 @@
+<!-- Main container with a light gray background -->
+<div class="bg-gray-50 min-h-screen py-8 md:py-12">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- The project content is rendered when the project$ observable emits a value -->
+    <ng-container *ngIf="project$ | async as project; else loadingOrError">
+      <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        
+        <!-- Cover Image -->
+        <img [src]="project.coverImage" alt="{{ project.title }} cover" class="w-full h-64 md:h-80 object-cover">
+        
+        <div class="p-6 md:p-8">
+          
+          <!-- Header: Title and Back Button -->
+          <div class="flex justify-between items-start mb-6">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900">{{ project.title }}</h1>
+            <a routerLink="/projects" class="flex items-center text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors whitespace-nowrap">
+              &larr; Back to Projects
+            </a>
+          </div>
+
+          <!-- Technology Tags -->
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span *ngFor="let tech of project.technologies" class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-3 py-1 rounded-full">
+              {{ tech }}
+            </span>
+          </div>
+
+          <!-- Project Description using ngx-markdown -->
+          <article class="prose lg:prose-xl max-w-none text-gray-700">
+            <markdown [data]="project.description"></markdown>
+          </article>
+          
+          <!-- Action Buttons: Live Demo and GitHub -->
+          <div class="mt-8 pt-6 border-t border-gray-200 flex flex-col sm:flex-row gap-4">
+            <a *ngIf="project.liveUrl" [href]="project.liveUrl" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition-colors">
+              View Live Demo
+            </a>
+            <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center justify-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+              View on GitHub
+            </a>
+          </div>
+          
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Template for Loading or Error states -->
+    <ng-template #loadingOrError>
+      <div class="text-center py-20">
+        <div *ngIf="!error" class="flex justify-center items-center">
+          <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-600"></div>
+        </div>
+        <div *ngIf="error" class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+           <h2 class="text-2xl font-bold text-red-600">An Error Occurred</h2>
+           <p class="mt-2 text-gray-600">{{ error }}</p>
+           <a routerLink="/projects" class="mt-6 inline-block bg-indigo-600 text-white font-semibold px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+            Return to Portfolio
+           </a>
+        </div>
+      </div>
+    </ng-template>
+
+  </div>
+</div>
