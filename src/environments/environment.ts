@@ -16,8 +16,8 @@ export const environment = {
   siteUrl: 'http://localhost:4200',
   
   // Feature Flags
-  enableLogging: true,  // Set to false for production
-  enableDebugMode: true, // Set to false for production
+  enableLogging: false,  // Set to false for production
+  enableDebugMode: false, // Set to false for production
   
   // File Upload Configuration
   maxFileSize: 5242880, // 5MB in bytes
