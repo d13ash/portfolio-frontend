@@ -6,7 +6,7 @@ export const environment = {
   production: true, // Set to true for production builds
   
   // API Configuration
-  apiUrl: 'http://localhost:4000', // Your backend API URL
+  apiUrl: 'https://dash-crm-backend.onrender.com', // Your backend API URL
   apiTimeout: 10000, // Request timeout in milliseconds
   
   // Application Info
