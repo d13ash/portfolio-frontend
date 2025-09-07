@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
-  private apiUrl = '/api/upload';
+ private apiUrl = environment.getApiEndpoint('/api/projects');
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

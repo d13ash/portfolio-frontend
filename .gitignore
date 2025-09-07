@@ -71,6 +71,7 @@ coverage/
 # User uploaded content (if you add file uploads)
 uploads/
 media/
+PROJECT_DESCRIPTION.md
 
 # Backup files
 *.backup
