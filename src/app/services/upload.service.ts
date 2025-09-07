@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class UploadService {
- private apiUrl = environment.getApiEndpoint('/api/projects');
+ private apiUrl = environment.getApiEndpoint('/api/upload');
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
